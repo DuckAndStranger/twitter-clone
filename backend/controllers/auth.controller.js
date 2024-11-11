@@ -6,12 +6,17 @@ export const signup = async (req, res) => {
     try {
         const {fullName, username, email, password} = req.body;
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({ error: "Invalid email format" });
         }
 
+        const usernameRegex = /^[a-zA-Z]+$/;
         const existingUser = await User.findOne({ username });
+        if(!usernameRegex.test(username)){
+            return res.status(400).json({ error: "Invalid username format" });
+        }
+
         if(existingUser){
             return res.status(400).json({ error: "Username is already taken" });
         }
@@ -24,6 +29,18 @@ export const signup = async (req, res) => {
         if(password.length < 6) {
             return res.status(400).json({ error: "Password must be at least 6 characters long" });
         }
+
+        if(password.length > 32) {
+            return res.status(400).json({ error: "Password's length must be less than 32 characters" });
+        }
+
+        if(username.length < 1){
+            return res.status(400).json({ error: "You must enter username" });
+        } 
+
+        if(fullName.length < 1){
+            return res.status(400).json({ error: "You must enter your name" });
+        } 
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
