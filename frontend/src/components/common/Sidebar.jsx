@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
+import X2Svg from "../svgs/xixi";
 
 const Sidebar = () => {
 
@@ -39,7 +40,7 @@ const Sidebar = () => {
 		<div className='md:flex-[2_2_0] w-18 max-w-52'>
 			<div className='sticky top-0 left-0 h-screen flex flex-col border-r border-gray-700 w-20 md:w-full'>
 				<Link to='/' className='flex justify-center md:justify-start'>
-					<XSvg className='px-2 w-12 h-12 rounded-full fill-white hover:bg-stone-900' />
+					<X2Svg className='px-4 w-24 h-12 mt-3 fill-white hover:bg-stone-900' />
 				</Link>
 				<ul className='flex flex-col gap-3 mt-4'>
 					<li className='flex justify-center md:justify-start'>
@@ -47,7 +48,7 @@ const Sidebar = () => {
 							to='/'
 							className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
 						>
-							<MdHomeFilled className='w-8 h-8' />
+							<MdHomeFilled className='w-8 h-7' />
 							<span className='text-lg hidden md:block'>Home</span>
 						</Link>
 					</li>
@@ -56,7 +57,7 @@ const Sidebar = () => {
 							to='/notifications'
 							className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
 						>
-							<IoNotifications className='w-6 h-6' />
+							<IoNotifications className='w-8 h-6' />
 							<span className='text-lg hidden md:block'>Notifications</span>
 						</Link>
 					</li>
@@ -66,7 +67,7 @@ const Sidebar = () => {
 							to={`/profile/${authUser?.username}`}
 							className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
 						>
-							<FaUser className='w-6 h-6' />
+							<FaUser className='w-8 h-6' />
 							<span className='text-lg hidden md:block'>Profile</span>
 						</Link>
 					</li>
