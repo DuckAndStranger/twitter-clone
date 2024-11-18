@@ -18,6 +18,7 @@ const Post = ({ post }) => {
 	const isLiked = post.likes.includes(authUser._id);
 	const isMyPost = authUser._id === post.user._id;
 	const formattedDate = formatPostDate(post.createdAt);
+	const isUserAdmin = authUser.isAdmin;
 
 	const {mutate:deletePost, isPending:isDeleting} = useMutation({
 		mutationFn: async () => {
@@ -135,7 +136,7 @@ const Post = ({ post }) => {
 							<span>·</span>
 							<span>{formattedDate}</span>
 						</span>
-						{isMyPost && (
+						{(isMyPost || isUserAdmin) && (
 							<span className='flex justify-end flex-1'>
 								{!isDeleting && <FaTrash className='cursor-pointer hover:text-red-500' onClick={handleDeletePost} />}
 								{isDeleting && (
