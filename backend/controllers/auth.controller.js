@@ -6,12 +6,12 @@ export const signup = async (req, res) => {
     try {
         const {fullName, username, email, password} = req.body;
 
-        const emailRegex = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+        const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({ error: "Invalid email format" });
         }
 
-        const usernameRegex = /^[a-zA-Z]+$/;
+        const usernameRegex = /^[a-zA-Z0-9]+$/;
         const existingUser = await User.findOne({ username });
         if(!usernameRegex.test(username)){
             return res.status(400).json({ error: "Invalid username format" });

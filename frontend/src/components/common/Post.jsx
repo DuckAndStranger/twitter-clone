@@ -148,11 +148,13 @@ const Post = ({ post }) => {
 					<div className='flex flex-col gap-3 overflow-hidden'>
 						<span>{post.text}</span>
 						{post.img && (
+							<a href={post.img}>
 							<img
 								src={post.img}
 								className='h-80 object-contain rounded-lg border border-gray-700'
 								alt=''
 							/>
+							</a>
 						)}
 					</div>
 					<div className='flex justify-between mt-3'>
