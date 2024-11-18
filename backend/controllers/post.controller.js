@@ -139,13 +139,12 @@ export const getAllPosts = async (req, res) => {
         .populate({
             path: "comments.user",
             select: "-password"
-        }
-        )
-        if (posts.length == 0) {
+        });
+        if (posts.length === 0) {
             return res.status(200).json([]);
         }
 
-        res.status(200).json([posts]);
+        res.status(200).json(posts);
     } catch (error) {
         console.log("Error in getAllPosts controller: ", error);
         res.status(500).json({error:"Internal server error"});
