@@ -15,7 +15,11 @@ export const createPost = async (req, res) => {
         }
 
         if(!text && !img) {
-            return res.status(400).json({error:"Post must habve text or image"});
+            return res.status(400).json({error:"Post must have text or image"});
+        }
+
+        if(text.length > 1000) {
+            return res.status(400).json({error:"Post length is too big"});
         }
 
         if(img){
@@ -42,7 +46,7 @@ export const deletePost = async (req, res) => {
         const post = await Post.findById(req.params.id);
         if (!post) res.status(404).json({error: "Post not found"})
 
-        if (post.user.toString() !== req.user._id.toString()) {
+        if (post.user.toString() !== req.user._id.toString() || !req.user.isAdmin) {
             return res.status(401).json({error:"You are not authorized to delete this post"});
         }
 
