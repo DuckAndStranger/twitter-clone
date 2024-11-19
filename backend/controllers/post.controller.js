@@ -44,9 +44,9 @@ export const createPost = async (req, res) => {
 export const deletePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        if (!post) res.status(404).json({error: "Post not found"})
+        if (!post) res.status(404).json({error: "Post not found"});
 
-        if (post.user.toString() !== req.user._id.toString() || !req.user.isAdmin) {
+        if (post.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
             return res.status(401).json({error:"You are not authorized to delete this post"});
         }
 

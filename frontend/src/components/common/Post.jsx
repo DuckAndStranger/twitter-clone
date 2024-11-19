@@ -14,9 +14,22 @@ const Post = ({ post }) => {
 	const [comment, setComment] = useState("");
 	const {data:authUser} = useQuery({queryKey: ["authUser"]});
 	const queryClient = useQueryClient();
-	const postOwner = post.user;
+	var postOwner = post.user;
 	const isLiked = post.likes.includes(authUser._id);
-	const isMyPost = authUser._id === post.user._id;
+	var isMyPost;
+	try {
+		isMyPost = authUser._id === post.user._id || "0";
+	} catch (error) {
+		isMyPost = false;
+	}
+	if (postOwner === null) {
+		postOwner = {username:"0", profileImg:"", fullName:""};
+	}
+	if (post.comments == null) {
+		post.comments == [];
+	}
+		
+
 	const formattedDate = formatPostDate(post.createdAt);
 	const isUserAdmin = authUser.isAdmin;
 
@@ -126,7 +139,7 @@ const Post = ({ post }) => {
 						<img src={postOwner.profileImg || "/avatar-placeholder.png"} />
 					</Link>
 				</div>
-				<div className='flex flex-col flex-1'>
+				<div className='flex flex-col flex-1  '>
 					<div className='flex gap-2 items-center'>
 						<Link to={`/profile/${postOwner.username}`} className='font-bold'>
 							{postOwner.fullName}
@@ -145,8 +158,8 @@ const Post = ({ post }) => {
 							</span>
 						)}
 					</div>
-					<div className='flex flex-col gap-3 overflow-hidden'>
-						<span>{post.text}</span>
+					<div className='flex flex-col gap-3 overflow-hidden text-ellipsis'>
+						<span className="break-words text-md max-w-xl">{post.text}</span>
 						{post.img && (
 							<a href={post.img}>
 							<img

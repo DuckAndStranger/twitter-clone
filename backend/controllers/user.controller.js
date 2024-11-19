@@ -127,6 +127,54 @@ export const updateUser = async (req, res) => {
             coverImg = uploadedResponce.secure_url;
         }
 
+        const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: "Invalid email format" });
+        }
+
+        const usernameRegex = /^[a-zA-Z0-9]+$/;
+        const existingUser = await User.findOne({ username });
+        if(!usernameRegex.test(username)){
+            return res.status(400).json({ error: "Invalid username format" });
+        }
+
+        if(existingUser){
+            return res.status(400).json({ error: "Username is already taken" });
+        }
+
+        const existingEmail = await User.findOne({ email });
+        if(existingEmail){
+            return res.status(400).json({ error: "Email is already taken" });
+        }
+
+        if(password.length < 6) {
+            return res.status(400).json({ error: "Password must be at least 6 characters long" });
+        }
+
+        if(password.length > 32) {
+            return res.status(400).json({ error: "Password's length must be less than 32 characters" });
+        }
+
+        if(username.length < 1){
+            return res.status(400).json({ error: "You must enter username" });
+        } 
+
+        if(username.length > 30){
+            return res.status(400).json({ error: "Username is too long" });
+        } 
+
+        if(fullName.length < 1){
+            return res.status(400).json({ error: "You must enter your name" });
+        } 
+
+        if(fullName.length > 30){
+            return res.status(400).json({ error: "Name is too long" });
+        } 
+
+        if(bio.length > 500){
+            return res.status(400).json({ error: "Bio is too long"});
+        }
+
         user.fullName = fullName || user.fullName;
         user.email = email || user.email;
         user.username = username || user.username;

@@ -38,8 +38,16 @@ export const signup = async (req, res) => {
             return res.status(400).json({ error: "You must enter username" });
         } 
 
+        if(username.length > 30){
+            return res.status(400).json({ error: "Username is too long" });
+        } 
+
         if(fullName.length < 1){
             return res.status(400).json({ error: "You must enter your name" });
+        } 
+
+        if(fullName.length > 30){
+            return res.status(400).json({ error: "Name is too long" });
         } 
 
         const salt = await bcrypt.genSalt(10);
