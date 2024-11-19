@@ -28,6 +28,7 @@ const Post = ({ post }) => {
 	if (post.comments == null) {
 		post.comments == [];
 	}
+	
 		
 
 	const formattedDate = formatPostDate(post.createdAt);
@@ -158,10 +159,10 @@ const Post = ({ post }) => {
 							</span>
 						)}
 					</div>
-					<div className='flex flex-col gap-3 overflow-hidden text-ellipsis'>
-						<span className="break-words text-md max-w-xl">{post.text}</span>
+					<div className='flex flex-col gap-3 overflow-hidden'>
+						<span className="break-words text-md">{post.text}</span>
 						{post.img && (
-							<a href={post.img}>
+							<a className="" href={post.img}>
 							<img
 								src={post.img}
 								className='h-80 object-contain rounded-lg border border-gray-700'

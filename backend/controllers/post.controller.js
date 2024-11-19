@@ -26,6 +26,9 @@ export const createPost = async (req, res) => {
             const uploadedResponse = await cloudinary.uploader.upload(img);
             img = uploadedResponse.secure_url;
         }
+        if(text => !text.replace(/\s/g, '').length) {
+            return res.status(400).json({error:"Post can't be only whitespaces"});
+        }
 
         const newPost = new Post({
             user: userId,
@@ -77,6 +80,10 @@ export const commentOnPost = async (req, res) => {
 
         if(!post){
             return res.status(404).json({error: "Post not found"});
+        }
+
+        if(text => !text.replace(/\s/g, '').length) {
+            return res.status(400).json({error:"Comment can't be only whitespaces"});
         }
 
         const comment = {user:userId, text}
@@ -169,7 +176,7 @@ export const getLikedPosts = async (req, res) => {
         }).populate({
             path: "comments.user",
             select: "-password"
-        });
+        }).sort({createdAt: -1});
 
         res.status(200).json(likedPosts);
     } catch (error) {
